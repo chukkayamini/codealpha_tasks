@@ -2,136 +2,167 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Room {
-    int roomNumber;
-    String category;
-    boolean isBooked;
+class Student {
+    String name;
+    ArrayList<Integer> grades;
 
-    Room(int roomNumber, String category) {
-        this.roomNumber = roomNumber;
-        this.category = category;
-        this.isBooked = false;
+    
+    Student(String name) {
+        this.name = name;
+        grades = new ArrayList<>();
+    }
+
+    
+    void addGrade(int grade) {
+        grades.add(grade);
+    }
+
+    
+    double getAverage() {
+        if (grades.isEmpty()) return 0;
+        int sum = 0;
+        for (int g : grades) {
+            sum += g;
+        }
+        return (double) sum / grades.size();
+    }
+
+    
+    int getHighest() {
+        int highest = Integer.MIN_VALUE;
+        for (int g : grades) {
+            if (g > highest) {
+                highest = g;
+            }
+        }
+        return highest;
+    }
+
+    
+    int getLowest() {
+        int lowest = Integer.MAX_VALUE;
+        for (int g : grades) {
+            if (g < lowest) {
+                lowest = g;
+            }
+        }
+        return lowest;
+    }
+
+    
+    void displayReport() {
+        System.out.println("\nStudent Name: " + name);
+        System.out.println("Grades: " + grades);
+        System.out.println("Average: " + getAverage());
+        System.out.println("Highest: " + getHighest());
+        System.out.println("Lowest: " + getLowest());
     }
 }
 
-class Reservation {
-    String customerName;
-    Room room;
+public class StudentGradeTracker {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
 
-    Reservation(String customerName, Room room) {
-        this.customerName = customerName;
-        this.room = room;
-        room.isBooked = true;
-    }
-}
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        sc.nextLine(); 
+ java.util.ArrayList;
+import java.util.Scanner;
 
-public class HotelReservationSystem {
-
-    static ArrayList<Room> rooms = new ArrayList<>();
-    static ArrayList<Reservation> reservations = new ArrayList<>();
+public class StudentGradeTracker {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        initializeRooms();
+        ArrayList<String> studentNames = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> studentGrades = new ArrayList<>();
 
-        int choice;
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        sc.nextLine(); 
 
-        do {
-            System.out.println("\n===== HOTEL RESERVATION SYSTEM =====");
-            System.out.println("1. View Available Rooms");
-            System.out.println("2. Book Room");
-            System.out.println("3. Cancel Reservation");
-            System.out.println("4. View Bookings");
-            System.out.println("5. Exit");
-            System.out.print("Enter choice: ");
-            choice = sc.nextInt();
-            sc.nextLine();
+        for (int i = 0; i < n; i++) {
 
-            switch (choice) {
-                case 1:
-                    viewAvailableRooms();
-                    break;
-                case 2:
-                    bookRoom(sc);
-                    break;
-                case 3:
-                    cancelReservation(sc);
-                    break;
-                case 4:
-                    viewBookings();
-                    break;
-                case 5:
-                    System.out.println("Thank you!");
-                    break;
-                default:
-                    System.out.println("Invalid choice!");
+            System.out.print("\nEnter student name: ");
+            String name = sc.nextLine();
+            studentNames.add(name);
+
+            System.out.print("Enter number of subjects: ");
+            int subjects = sc.nextInt();
+
+            ArrayList<Integer> grades = new ArrayList<>();
+
+            for (int j = 0; j < subjects; j++) {
+                System.out.print("Enter grade for subject " + (j + 1) + ": ");
+                int grade = sc.nextInt();
+                grades.add(grade);
             }
 
-        } while (choice != 5);
+            studentGrades.add(grades);
+            sc.nextLine(); 
+        }
+
+        
+        System.out.println("\n===== Student Summary Report =====");
+
+        for (int i = 0; i < studentNames.size(); i++) {
+
+            String name = studentNames.get(i);
+            ArrayList<Integer> grades = studentGrades.get(i);
+
+            int sum = 0;
+            int highest = Integer.MIN_VALUE;
+            int lowest = Integer.MAX_VALUE;
+
+            for (int g : grades) {
+                sum += g;
+
+                if (g > highest) {
+                    highest = g;
+                }
+
+                if (g < lowest) {
+                    lowest = g;
+                }
+            }
+
+            double average = (double) sum / grades.size();
+
+            System.out.println("\nStudent Name: " + name);
+            System.out.println("Grades: " + grades);
+            System.out.println("Average: " + average);
+            System.out.println("Highest: " + highest);
+            System.out.println("Lowest: " + lowest);
+        }
 
         sc.close();
     }
 
-    // Initialize sample rooms
-    static void initializeRooms() {
-        rooms.add(new Room(101, "Standard"));
-        rooms.add(new Room(102, "Standard"));
-        rooms.add(new Room(201, "Deluxe"));
-        rooms.add(new Room(202, "Deluxe"));
-        rooms.add(new Room(301, "Suite"));
-    }
+        for (int i = 0; i < n; i++) {
+            System.out.print("\nEnter student name: ");
+            String name = sc.nextLine();
 
-    static void viewAvailableRooms() {
-        System.out.println("\nAvailable Rooms:");
-        for (Room room : rooms) {
-            if (!room.isBooked) {
-                System.out.println("Room No: " + room.roomNumber + " | Category: " + room.category);
+            Student student = new Student(name);
+
+            System.out.print("Enter number of subjects: ");
+            int subjects = sc.nextInt();
+
+            for (int j = 0; j < subjects; j++) {
+                System.out.print("Enter grade for subject " + (j + 1) + ": ");
+                int grade = sc.nextInt();
+                student.addGrade(grade);
             }
-        }
-    }
-
-    static void bookRoom(Scanner sc) {
-        System.out.print("Enter your name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Enter room number to book: ");
-        int roomNumber = sc.nextInt();
-
-        for (Room room : rooms) {
-            if (room.roomNumber == roomNumber && !room.isBooked) {
-                Reservation reservation = new Reservation(name, room);
-                reservations.add(reservation);
-                System.out.println("Room booked successfully!");
-                return;
-            }
+            sc.nextLine(); 
+            students.add(student);
         }
 
-        System.out.println("Room not available!");
-    }
-
-    static void cancelReservation(Scanner sc) {
-        System.out.print("Enter your name to cancel booking: ");
-        String name = sc.nextLine();
-
-        for (Reservation r : reservations) {
-            if (r.customerName.equalsIgnoreCase(name)) {
-                r.room.isBooked = false;
-                reservations.remove(r);
-                System.out.println("Reservation cancelled successfully!");
-                return;
-            }
+        
+        System.out.println("\n===== Student Summary Report =====");
+        for (Student s : students) {
+            s.displayReport();
         }
 
-        System.out.println("Reservation not found!");
-    }
-
-    static void viewBookings() {
-        System.out.println("\nBooking Details:");
-        for (Reservation r : reservations) {
-            System.out.println("Customer: " + r.customerName +
-                    " | Room No: " + r.room.roomNumber +
-                    " | Category: " + r.room.category);
-        }
+        sc.close();
     }
 }
