@@ -4,19 +4,13 @@ import java.util.Scanner;
 class Student {
     String name;
     ArrayList<Integer> grades;
-
-    // Constructor
     Student(String name) {
         this.name = name;
         grades = new ArrayList<>();
     }
-
-    // Add grade
     void addGrade(int grade) {
         grades.add(grade);
     }
-
-    // Calculate average
     double getAverage() {
         if (grades.isEmpty()) return 0;
         int sum = 0;
@@ -26,7 +20,7 @@ class Student {
         return (double) sum / grades.size();
     }
 
-    // Get highest grade
+    
     int getHighest() {
         int highest = Integer.MIN_VALUE;
         for (int g : grades) {
@@ -37,7 +31,7 @@ class Student {
         return highest;
     }
 
-    // Get lowest grade
+   
     int getLowest() {
         int lowest = Integer.MAX_VALUE;
         for (int g : grades) {
@@ -48,7 +42,7 @@ class Student {
         return lowest;
     }
 
-    // Display student report
+    
     void displayReport() {
         System.out.println("\nStudent Name: " + name);
         System.out.println("Grades: " + grades);
